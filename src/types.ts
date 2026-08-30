@@ -1,4 +1,4 @@
-export const THEMES = ['rose', 'lavender', 'mint', 'peach', 'sky', 'black', 'gray'] as const;
+export const THEMES = ['black', 'gray', 'rose', 'lavender', 'mint', 'peach', 'sky'] as const;
 export type Theme = (typeof THEMES)[number];
 
 export const LANGS = ['ar', 'en'] as const;
@@ -45,6 +45,6 @@ export const THEME_ACCENT: Record<Theme, string> = {
   mint: '#1e6f55',
   peach: '#9d4f1c',
   sky: '#2c5f92',
-  black: '#3f3f46',
+  black: '#2e2e33',
   gray: '#4e5a66',
 };

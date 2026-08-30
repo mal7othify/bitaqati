@@ -87,7 +87,7 @@ export function validateCardInput(body: unknown): ValidationResult {
     if (!KNOWN_FIELDS.has(key)) errors.push(`unknown field: ${key}`);
   }
 
-  const card: CardInput = { links: {}, theme: 'rose', defaultLang: 'ar', avatarKind: 'initial' };
+  const card: CardInput = { links: {}, theme: 'black', defaultLang: 'ar', avatarKind: 'initial' };
 
   for (const field of Object.keys(TEXT_LIMITS) as TextField[]) {
     const value = cleanText(input[field], TEXT_LIMITS[field]);

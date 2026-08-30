@@ -48,6 +48,13 @@
 
 /* Palettes - light-mode accents are deep (WCAG AA on --bg) */
 :root,
+:root[data-palette='black'] {
+  --aurora-1: #bfbfc6;
+  --aurora-2: #aaaab4;
+  --aurora-3: #d2cfd8;
+  --accent: #2e2e33;
+  --accent-strong: #18181c;
+}
 :root[data-palette='rose'] {
   --aurora-1: #f7c1d3;
   --aurora-2: #f9ddc8;
@@ -83,13 +90,6 @@
   --accent: #2c5f92;
   --accent-strong: #204a75;
 }
-:root[data-palette='black'] {
-  --aurora-1: #d8d8dc;
-  --aurora-2: #c7c7cf;
-  --aurora-3: #e6e4e8;
-  --accent: #3f3f46;
-  --accent-strong: #26262c;
-}
 :root[data-palette='gray'] {
   --aurora-1: #d3d9df;
   --aurora-2: #e0e4e8;
@@ -115,6 +115,10 @@
     --error: #f79cae;
   }
   :root,
+  :root[data-palette='black'] {
+    --accent: #d4d4da;
+    --accent-strong: #e9e9ee;
+  }
   :root[data-palette='rose'] {
     --accent: #f0a8c5;
     --accent-strong: #f7c6da;
@@ -134,10 +138,6 @@
   :root[data-palette='sky'] {
     --accent: #a2cdf0;
     --accent-strong: #c2def5;
-  }
-  :root[data-palette='black'] {
-    --accent: #cfcfd6;
-    --accent-strong: #e6e6ec;
   }
   :root[data-palette='gray'] {
     --accent: #aebbc5;
@@ -621,7 +621,7 @@ html[lang='ar'] legend {
   background: linear-gradient(135deg, #bddcf7, #d6d9f7);
 }
 .palette-chip[data-palette='black'] > span {
-  background: linear-gradient(135deg, #55555e, #26262c);
+  background: linear-gradient(135deg, #3a3a41, #131318);
 }
 .palette-chip[data-palette='gray'] > span {
   background: linear-gradient(135deg, #c3cbd3, #8b97a2);

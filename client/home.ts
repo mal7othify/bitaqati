@@ -68,7 +68,7 @@ const editIslandEl = document.getElementById('edit-data');
 const editing: EditIsland | null = editIslandEl?.textContent ? (JSON.parse(editIslandEl.textContent) as EditIsland) : null;
 
 let uiLang: Lang = (localStorage.getItem('bitaqati:uiLang') as Lang | null) ?? 'ar';
-let theme: Theme = 'rose';
+let theme: Theme = 'black';
 let avatarKind: AvatarKind = 'initial';
 
 const field = (name: string): HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement =>
@@ -257,7 +257,7 @@ if (editing) {
     if (value) field(`link-${p}`).value = value;
   }
   field('defaultLang').value = card.defaultLang ?? 'ar';
-  setTheme(card.theme ?? 'rose');
+  setTheme(card.theme ?? 'black');
   setAvatarKind(card.avatarKind ?? 'initial');
   const hasAr = Boolean(card.nameAr || card.titleAr || card.companyAr || card.bioAr);
   const hasEn = Boolean(card.nameEn || card.titleEn || card.companyEn || card.bioEn);

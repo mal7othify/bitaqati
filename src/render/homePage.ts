@@ -142,7 +142,7 @@ export function homePage(opts: HomePageOptions = {}): string {
               <button type="button" data-avatar-kind="hidden" aria-pressed="false" data-i18n="avHidden">${t('avHidden')}</button>
             </div>
             <div class="field emoji-field" id="emoji-field" hidden>
-              <input id="avatarEmoji" name="avatarEmoji" maxlength="16" dir="ltr" placeholder="🌸" aria-label="Emoji" autocomplete="off" />
+              <input id="avatarEmoji" name="avatarEmoji" maxlength="16" dir="ltr" placeholder="💻" aria-label="Emoji" autocomplete="off" />
             </div>
           </div>
         </div>

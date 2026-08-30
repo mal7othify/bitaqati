@@ -17,7 +17,7 @@ export interface LayoutOptions {
 }
 
 const FAVICON =
-  "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ccircle cx='50' cy='50' r='48' fill='%23f0a8c5'/%3E%3Ctext x='50' y='68' font-size='55' text-anchor='middle' fill='%23531f36' font-family='sans-serif'%3E%D8%A8%3C/text%3E%3C/svg%3E";
+  "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ccircle cx='50' cy='50' r='48' fill='%232e2e33'/%3E%3Ctext x='50' y='68' font-size='55' text-anchor='middle' fill='%23f5f5f7' font-family='sans-serif'%3E%D8%A8%3C/text%3E%3C/svg%3E";
 
 /** Cloudflare Web Analytics: set CF_BEACON_TOKEN to inject the beacon.
     Complements the Umami option; either or both can be enabled. */
