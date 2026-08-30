@@ -17,6 +17,10 @@ import { Lang } from './types.js';
 const PORT = Number(process.env.PORT ?? 3000);
 const DB_PATH = process.env.DB_PATH ?? './data/bitaqati.db';
 const ADMIN_TOKEN = process.env.ADMIN_TOKEN ?? '';
+/* "Report this card" opens the visitor's mail app addressed here, with the
+   card URL prefilled (the stored report is still recorded); set REPORT_EMAIL
+   to empty to fall back to the in-page prompt flow */
+const REPORT_EMAIL = process.env.REPORT_EMAIL ?? 'me@mal7othify.com';
 const UMAMI: UmamiConfig =
   process.env.UMAMI_SRC && process.env.UMAMI_WEBSITE_ID
     ? { src: process.env.UMAMI_SRC, websiteId: process.env.UMAMI_WEBSITE_ID }
@@ -233,7 +237,7 @@ app.get('/:id', (c) => {
   /* Read-heavy, changes rarely: cache 5 min at the edge. Stale
      copies self-heal within the TTL after an edit. */
   c.header('Cache-Control', 'public, s-maxage=300, max-age=60');
-  return c.html(cardPage(card, lang, baseUrl(c), UMAMI));
+  return c.html(cardPage(card, lang, baseUrl(c), UMAMI, REPORT_EMAIL || undefined));
 });
 
 app.notFound((c) => c.html(notFoundPage('ar'), 404));

@@ -82,7 +82,7 @@ function cardArticle(card: Card, lang: Lang, primary: boolean): Raw {
   </article>`;
 }
 
-export function cardPage(card: Card, lang: Lang, baseUrl: string, umami?: UmamiConfig): string {
+export function cardPage(card: Card, lang: Lang, baseUrl: string, umami?: UmamiConfig, reportEmail?: string): string {
   const name = pick(card, lang, 'name');
   const title = pick(card, lang, 'title');
   const bio = pick(card, lang, 'bio');
@@ -107,7 +107,9 @@ export function cardPage(card: Card, lang: Lang, baseUrl: string, umami?: UmamiC
 </main>
 <footer class="card-footer">
   <a href="/" id="footer-cta">${STRINGS.createOwn[lang]}</a>
-  <button type="button" class="report-link" id="report-btn">${STRINGS.report[lang]}</button>
+  ${reportEmail
+    ? html`<a class="report-link" id="report-btn" data-report-mail href="${reportMailto(reportEmail, cardUrl, lang)}">${STRINGS.report[lang]}</a>`
+    : html`<button type="button" class="report-link" id="report-btn">${STRINGS.report[lang]}</button>`}
 </footer>
 <script type="application/json" id="card-data">${jsonIsland({ id: card.id })}</script>`;
 
@@ -121,6 +123,14 @@ export function cardPage(card: Card, lang: Lang, baseUrl: string, umami?: UmamiC
     umami,
     body,
   });
+}
+
+/** Report-by-email: opens the visitor's mail app with the card URL filled
+    in, addressed to the operator's REPORT_EMAIL. */
+function reportMailto(email: string, cardUrl: string, lang: Lang): string {
+  const subject = encodeURIComponent(STRINGS.reportSubject[lang]);
+  const body = encodeURIComponent(`${STRINGS.reportBody[lang]}\n${cardUrl}\n\n${STRINGS.reportReason[lang]} `);
+  return `mailto:${email}?subject=${subject}&body=${body}`;
 }
 
 export function notFoundPage(lang: Lang): string {

@@ -149,11 +149,23 @@ export const STRINGS = {
     ar: "إيش سبب البلاغ؟",
     en: "Why are you reporting this card?",
   },
+  reportSubject: { ar: "بلاغ عن بطاقة", en: "Reporting a card" },
+  reportBody: {
+    ar: "أرغب بالإبلاغ عن هذه البطاقة:",
+    en: "I would like to report this card:",
+  },
+  reportReason: { ar: "السبب:", en: "Reason:" },
   reportDone: {
     ar: "وصلنا البلاغ، شكرًا لك.",
     en: "Report received - thank you.",
   },
   ogFallback: { ar: "بطاقة أعمال رقمية", en: "Digital business card" },
+
+  /* GitHub footer link, on every page */
+  contribute: {
+    ar: "ساهم في هذا المشروع على GitHub",
+    en: "Contribute to this project on GitHub",
+  },
 
   /* Theme toggle (sun/moon) */
   themeToggle: { ar: "تبديل الوضع الليلي", en: "Toggle dark mode" },

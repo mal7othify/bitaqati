@@ -23,6 +23,12 @@ const FAVICON =
     Complements the Umami option; either or both can be enabled. */
 const CF_BEACON_TOKEN = process.env.CF_BEACON_TOKEN ?? '';
 
+/** Cache-busting version for CSS/JS URLs. Assets carry a 1 h cache header,
+    so without this a deploy could leave browsers on stale styles/scripts.
+    A new value per server start is enough: assets only change on deploys. */
+const ASSET_VERSION = Date.now().toString(36);
+const versioned = (path: string): string => `${path}?v=${ASSET_VERSION}`;
+
 export function layout(opts: LayoutOptions): string {
   const dir = opts.lang === 'ar' ? 'rtl' : 'ltr';
   const page = html`<!doctype html>
@@ -35,18 +41,21 @@ ${opts.description ? html`<meta name="description" content="${opts.description}"
 <link rel="preconnect" href="https://fonts.googleapis.com" />
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
 <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400..700&family=Inter:wght@400..800&family=IBM+Plex+Sans+Arabic:wght@400;500;600;700&display=swap" rel="stylesheet" />
-<link rel="stylesheet" href="/styles.css" />
+<link rel="stylesheet" href="${versioned('/styles.css')}" />
 <link rel="icon" href="${raw(FAVICON)}" />
-<script src="/js/theme.js"></script>
+<script src="${versioned('/js/theme.js')}"></script>
 ${opts.head ?? ''}
 ${opts.umami ? html`<script defer src="${opts.umami.src}" data-website-id="${opts.umami.websiteId}"></script>` : ''}
 ${CF_BEACON_TOKEN ? html`<script defer src="https://static.cloudflareinsights.com/beacon.min.js" data-cf-beacon="${JSON.stringify({ token: CF_BEACON_TOKEN })}"></script>` : ''}
-${(opts.scripts ?? []).map((src) => html`<script type="module" src="${src}"></script>`)}
+${(opts.scripts ?? []).map((src) => html`<script type="module" src="${versioned(src)}"></script>`)}
 </head>
 <body>
 <div class="aurora" aria-hidden="true"><span></span><span></span><span></span></div>
 <script type="application/json" id="i18n-data">${jsonIsland(STRINGS)}</script>
 ${opts.body}
+<footer class="gh-footer">
+  <a href="https://github.com/mal7othify/bitaqati" target="_blank" rel="noopener noreferrer" data-i18n="contribute">${STRINGS.contribute[opts.lang]}</a>
+</footer>
 </body>
 </html>`;
   return page.value;

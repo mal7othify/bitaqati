@@ -1112,3 +1112,20 @@ footer.site-footer {
 .theme-toggle:active {
   transform: rotate(40deg) scale(0.94);
 }
+
+/* GitHub contribute line, bottom of every page */
+.gh-footer {
+  text-align: center;
+  padding-block: var(--space-2) var(--space-4);
+  font-size: 0.82rem;
+}
+
+.gh-footer a {
+  color: var(--text-faint);
+  text-decoration-color: color-mix(in oklab, var(--text-faint) 50%, transparent);
+  transition: color var(--dur-fast) var(--ease-soft);
+}
+
+.gh-footer a:hover {
+  color: var(--accent);
+}
