@@ -1,7 +1,7 @@
 # بطاقتي · Bitaqati
 
 Bilingual (Arabic/English) digital business cards with short URLs, QR codes,
-and one-tap vCard download.
+and one-tap vCard download. Live at [bitaqati.world](https://bitaqati.world).
 
 **Stack**: TypeScript everywhere · Hono on Node 24 (server-rendered pages,
 no SPA) · SQLite via the built-in `node:sqlite` (WAL, zero native deps) ·
@@ -75,3 +75,7 @@ Every user-facing string (Arabic and English) lives in `src/i18n.ts` only.
 The server renders from that table and embeds it as a JSON island
 (`#i18n-data`) in each page for the browser scripts, so translating or
 rewording means editing that one file and rebuilding.
+
+## License
+
+[MIT](LICENSE)
