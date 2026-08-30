@@ -50,6 +50,8 @@ export function safeHttpsUrl(value: string, allowedHosts: string[] | null): stri
   }
   if (url.protocol !== 'https:') return null;
   if (url.username || url.password) return null;
+  // a real public hostname: at least one dot and a plausible TLD
+  if (!/\.[a-z0-9-]{2,}$/i.test(url.hostname)) return null;
   if (allowedHosts) {
     const host = url.hostname.toLowerCase();
     const match = allowedHosts.some((allowed) => host === allowed || host.endsWith(`.${allowed}`));
@@ -144,6 +146,17 @@ export function validateCardInput(body: unknown): ValidationResult {
     const emoji = cleanEmoji(input.avatarEmoji);
     if (!emoji) errors.push('avatarEmoji must be a single emoji');
     else card.avatarEmoji = emoji;
+  }
+
+  /* A name alone is not a card: require at least one piece of substance -
+     a title, a company together with its link, an email, or any link. */
+  const hasSubstance =
+    Boolean(card.titleAr || card.titleEn) ||
+    Boolean((card.companyAr || card.companyEn) && card.companyUrl) ||
+    Boolean(card.email) ||
+    Object.keys(card.links).length > 0;
+  if (!hasSubstance) {
+    errors.push('add a title, a company with its URL, an email, or at least one link');
   }
   // A default language with no content in it falls back to the filled one
   if (card.defaultLang === 'ar' && !card.nameAr) card.defaultLang = 'en';

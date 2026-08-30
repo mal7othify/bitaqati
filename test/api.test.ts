@@ -61,6 +61,7 @@ test('?lang=en flips direction and language', async () => {
 test('XSS: injected HTML in name renders escaped', async () => {
   const res = await jsonReq('POST', '/api/cards', {
     nameEn: '<script>alert(1)</script>',
+    titleEn: 'Engineer',
     bioEn: '"><img src=x onerror=alert(2)>',
   });
   assert.equal(res.status, 201);
@@ -95,10 +96,10 @@ test('QR endpoints serve SVG and PNG encoding ?src=qr', async () => {
 });
 
 test('editing requires the token', async () => {
-  const wrong = await jsonReq('PUT', `/api/cards/${cardId}`, { nameEn: 'Hacked', editToken: 'nope' });
+  const wrong = await jsonReq('PUT', `/api/cards/${cardId}`, { nameEn: 'Hacked', titleEn: 'X', editToken: 'nope' });
   assert.equal(wrong.status, 403);
 
-  const right = await jsonReq('PUT', `/api/cards/${cardId}`, { nameEn: 'Sara A.', nameAr: 'سارة', editToken });
+  const right = await jsonReq('PUT', `/api/cards/${cardId}`, { nameEn: 'Sara A.', nameAr: 'سارة', titleEn: 'Engineer', editToken });
   assert.equal(right.status, 200);
 
   const editPage = await app.request(`/${cardId}/edit?token=${editToken}`, { headers: { 'x-forwarded-for': '10.0.0.6' } });
@@ -127,10 +128,10 @@ test('report + admin unpublish flow', async () => {
 test('rate limit: 11th creation from one IP is rejected', async () => {
   const ip = '10.9.9.9';
   for (let i = 0; i < 10; i++) {
-    const res = await jsonReq('POST', '/api/cards', { nameEn: `Person ${i}` }, ip);
+    const res = await jsonReq('POST', '/api/cards', { nameEn: `Person ${i}`, titleEn: 'T' }, ip);
     assert.equal(res.status, 201, `creation ${i + 1} allowed`);
   }
-  const blocked = await jsonReq('POST', '/api/cards', { nameEn: 'Person 11' }, ip);
+  const blocked = await jsonReq('POST', '/api/cards', { nameEn: 'Person 11', titleEn: 'T' }, ip);
   assert.equal(blocked.status, 429);
 });
 

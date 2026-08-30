@@ -509,8 +509,6 @@ button {
   .preview-pane {
     position: sticky;
     inset-block-start: 6rem;
-    max-block-size: calc(100dvh - 7rem);
-    overflow-y: auto;
   }
 }
 
@@ -613,6 +611,12 @@ html[lang='ar'] legend {
 .field select,
 .field textarea {
   transition: border-color var(--dur-fast) var(--ease-soft), box-shadow var(--dur-fast) var(--ease-soft);
+}
+
+.field textarea {
+  resize: vertical;
+  min-block-size: 2.75rem;
+  max-block-size: 10rem;
 }
 
 .field .hint {

@@ -317,6 +317,17 @@ function validateForm(): string[] {
     }
   }
 
+  /* Mirror of the server rule: a name alone is not a card */
+  const inSection = (name: string, lang: Lang): string => (sectionOn(lang) ? field(name).value.trim() : '');
+  const hasTitle = Boolean(inSection('titleAr', 'ar') || inSection('titleEn', 'en'));
+  const hasCompany = Boolean((inSection('companyAr', 'ar') || inSection('companyEn', 'en')) && companyUrl);
+  const hasLinks = Boolean(email) || PLATFORMS.some((p) => field(`link-${p}`).value.trim());
+  if ((nameAr || nameEn) && !hasTitle && !hasCompany && !hasLinks) {
+    errors.push(T.errCardEmpty![uiLang]);
+    if (sectionOn('ar')) markInvalid('titleAr');
+    if (sectionOn('en')) markInvalid('titleEn');
+  }
+
   return errors;
 }
 
@@ -332,6 +343,7 @@ function safeHttpsUrl(value: string, allowedHosts: string[] | null): boolean {
     }
   }
   if (url.protocol !== 'https:' || url.username || url.password) return false;
+  if (!/\.[a-z0-9-]{2,}$/i.test(url.hostname)) return false;
   if (allowedHosts) {
     const host = url.hostname.toLowerCase();
     if (!allowedHosts.some((allowed) => host === allowed || host.endsWith(`.${allowed}`))) return false;
@@ -420,6 +432,7 @@ form.addEventListener('submit', async (e) => {
 /** Server messages arrive in English; translate the known ones. */
 function localizeServerError(message: string): string {
   if (message.includes('name in Arabic or English')) return T.errName![uiLang];
+  if (message.includes('add a title')) return T.errCardEmpty![uiLang];
   if (message.includes('invalid email')) return T.errEmail![uiLang];
   if (message.includes('company URL')) return T.errCompanyUrl![uiLang];
   if (message.includes('avatarEmoji')) return T.errEmoji![uiLang];

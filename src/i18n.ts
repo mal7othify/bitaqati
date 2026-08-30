@@ -125,6 +125,10 @@ export const STRINGS = {
     ar: "اختار إيموجي واحد للشعار",
     en: "Pick one emoji for the logo",
   },
+  errCardEmpty: {
+    ar: "أضف مع الاسم شيء واحد على الأقل: مسمى وظيفي، جهة عمل مع رابطها، بريد إلكتروني، أو أي رابط تواصل",
+    en: "Along with the name, add at least one of: a job title, a company with its link, an email, or any link",
+  },
   errOneLang: {
     ar: "خلي قسم واحد على الأقل: العربي أو الإنجليزي",
     en: "Keep at least one section: Arabic or English",
@@ -152,7 +156,7 @@ export const STRINGS = {
   ogFallback: { ar: "بطاقة أعمال رقمية", en: "Digital business card" },
 
   /* Theme toggle (sun/moon) */
-  themeToggle: { ar: 'تبديل الوضع الليلي', en: 'Toggle dark mode' },
+  themeToggle: { ar: "تبديل الوضع الليلي", en: "Toggle dark mode" },
 
   /* Not-found page */
   nfTitle: { ar: "ما في بطاقة هنا", en: "No card here" },
