@@ -1,10 +1,9 @@
-# Automatic HTTPS via Let's Encrypt.
-{$DOMAIN} {
+:80 {
 	encode zstd gzip
+
 	reverse_proxy app:3000
 
 	header {
-		Strict-Transport-Security "max-age=31536000; includeSubDomains"
 		-Server
 	}
 }

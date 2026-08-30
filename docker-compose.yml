@@ -5,7 +5,7 @@ services:
     environment:
       - PORT=3000
       - DB_PATH=/data/bitaqati.db
-      - BASE_URL=${BASE_URL:?set BASE_URL in .env, e.g. https://cards.example.com}
+      - BASE_URL=${BASE_URL:?set BASE_URL in .env}
       - ADMIN_TOKEN=${ADMIN_TOKEN:-}
       - UMAMI_SRC=${UMAMI_SRC:-}
       - UMAMI_WEBSITE_ID=${UMAMI_WEBSITE_ID:-}
@@ -25,10 +25,9 @@ services:
     image: caddy:2
     restart: unless-stopped
     ports:
-      - "80:80"
-      - "443:443"
+      - "127.0.0.1:8080:80"
     environment:
-      - DOMAIN=${DOMAIN:?set DOMAIN in .env, e.g. cards.example.com}
+      - DOMAIN=${DOMAIN:?set DOMAIN in .env}
     volumes:
       - ./Caddyfile:/etc/caddy/Caddyfile:ro
       - caddy-data:/data
