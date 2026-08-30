@@ -10,6 +10,7 @@ services:
       - UMAMI_SRC=${UMAMI_SRC:-}
       - UMAMI_WEBSITE_ID=${UMAMI_WEBSITE_ID:-}
       - CF_BEACON_TOKEN=${CF_BEACON_TOKEN:-}
+      - GA_MEASUREMENT_ID=${GA_MEASUREMENT_ID:-}
       - REPORT_EMAIL=${REPORT_EMAIL:-me@mal7othify.com}
     volumes:
       - card-data:/data

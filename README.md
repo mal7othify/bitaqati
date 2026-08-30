@@ -56,8 +56,10 @@ Caddy terminates TLS with automatic certificates for `DOMAIN`. Monitor
 
 ## Analytics
 
-Two zero-cookie options, independently toggled by env vars; leave both empty
-to run with no analytics at all.
+Three options, independently toggled by env vars; leave all empty to run
+with no analytics at all. Cloudflare and Umami are zero-cookie; Google
+Analytics sets cookies, so check whether your audience requires a consent
+banner before enabling it.
 
 - **Cloudflare Web Analytics** (if the site runs behind Cloudflare): create
   a site in the Cloudflare dashboard under Analytics -> Web Analytics, copy
@@ -68,6 +70,11 @@ to run with no analytics at all.
   `click_email`, `click_<platform>`, `card_created`, `card_edited`. QR scans
   are segmentable by the `?src=qr` query in pageviews. (Umami is
   self-hostable; it is intentionally not part of this compose file.)
+- **Google Analytics 4**: set `GA_MEASUREMENT_ID` to your `G-XXXXXXXXXX` ID
+  and the gtag bootstrap is injected on every page with matching CSP entries.
+  The CSP blocks inline scripts, so the usual copy-paste snippet is replaced
+  by a small self-hosted loader (`client/ga.ts`) that reads the ID from a
+  meta tag and pulls in gtag.js itself.
 
 ## Localization
 

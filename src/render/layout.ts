@@ -23,6 +23,10 @@ const FAVICON =
     Complements the Umami option; either or both can be enabled. */
 const CF_BEACON_TOKEN = process.env.CF_BEACON_TOKEN ?? '';
 
+/** Google Analytics 4: set GA_MEASUREMENT_ID (G-XXXXXXXXXX) to enable.
+    The CSP blocks inline scripts, so /js/ga.js does the gtag bootstrap. */
+const GA_MEASUREMENT_ID = process.env.GA_MEASUREMENT_ID ?? '';
+
 /** Cache-busting version for CSS/JS URLs. Assets carry a 1 h cache header,
     so without this a deploy could leave browsers on stale styles/scripts.
     A new value per server start is enough: assets only change on deploys. */
@@ -46,6 +50,7 @@ ${opts.description ? html`<meta name="description" content="${opts.description}"
 ${opts.head ?? ''}
 ${opts.umami ? html`<script defer src="${opts.umami.src}" data-website-id="${opts.umami.websiteId}"></script>` : ''}
 ${CF_BEACON_TOKEN ? html`<script defer src="https://static.cloudflareinsights.com/beacon.min.js" data-cf-beacon="${JSON.stringify({ token: CF_BEACON_TOKEN })}"></script>` : ''}
+${GA_MEASUREMENT_ID ? html`<meta name="ga-measurement-id" content="${GA_MEASUREMENT_ID}" /><script type="module" src="${versioned('/js/ga.js')}"></script>` : ''}
 ${(opts.scripts ?? []).map((src) => html`<script type="module" src="${versioned(src)}"></script>`)}
 </head>
 <body>

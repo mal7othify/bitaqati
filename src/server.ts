@@ -70,15 +70,21 @@ app.use('*', async (c, next) => {
     const umamiOrigin = UMAMI ? new URL(UMAMI.src).origin : '';
     const cfScript = process.env.CF_BEACON_TOKEN ? ' https://static.cloudflareinsights.com' : '';
     const cfConnect = process.env.CF_BEACON_TOKEN ? ' https://cloudflareinsights.com' : '';
+    const ga = Boolean(process.env.GA_MEASUREMENT_ID);
+    const gaScript = ga ? ' https://www.googletagmanager.com' : '';
+    const gaConnect = ga
+      ? ' https://www.googletagmanager.com https://*.google-analytics.com https://*.analytics.google.com'
+      : '';
+    const gaImg = ga ? ' https://*.google-analytics.com' : '';
     c.header(
       'Content-Security-Policy',
       [
         "default-src 'none'",
-        `script-src 'self'${umamiOrigin ? ` ${umamiOrigin}` : ''}${cfScript}`,
+        `script-src 'self'${umamiOrigin ? ` ${umamiOrigin}` : ''}${cfScript}${gaScript}`,
         "style-src 'self' https://fonts.googleapis.com",
         'font-src https://fonts.gstatic.com',
-        "img-src 'self' data:",
-        `connect-src 'self'${umamiOrigin ? ` ${umamiOrigin}` : ''}${cfConnect}`,
+        `img-src 'self' data:${gaImg}`,
+        `connect-src 'self'${umamiOrigin ? ` ${umamiOrigin}` : ''}${cfConnect}${gaConnect}`,
         "base-uri 'none'",
         "form-action 'self'",
         "frame-ancestors 'none'",
