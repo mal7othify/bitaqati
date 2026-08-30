@@ -98,10 +98,8 @@
   --accent-strong: #39434d;
 }
 
-/* Dark tokens. The theme toggle sets data-theme on <html>; without it the
-   system preference decides. An explicit data-theme always wins. */
 @media (prefers-color-scheme: dark) {
-  :root:not([data-theme='light']) {
+  :root {
     --bg: #171219;
     --bg-raised: #211a24;
     --text: #ece4ea;
@@ -115,89 +113,36 @@
     --aurora-opacity: 0.26;
     --on-gradient: #241722;
     --error: #f79cae;
-    color-scheme: dark;
   }
-  :root:not([data-theme='light']),
-  :root:not([data-theme='light']),
-  :root:not([data-theme='light'])[data-palette='rose'] {
+  :root,
+  :root[data-palette='rose'] {
     --accent: #f0a8c5;
     --accent-strong: #f7c6da;
   }
-  :root:not([data-theme='light'])[data-palette='lavender'] {
+  :root[data-palette='lavender'] {
     --accent: #c6b1f0;
     --accent-strong: #dbccf7;
   }
-  :root:not([data-theme='light'])[data-palette='mint'] {
+  :root[data-palette='mint'] {
     --accent: #9adcc0;
     --accent-strong: #bdeada;
   }
-  :root:not([data-theme='light'])[data-palette='peach'] {
+  :root[data-palette='peach'] {
     --accent: #f5bd8e;
     --accent-strong: #f9d4b2;
   }
-  :root:not([data-theme='light'])[data-palette='sky'] {
+  :root[data-palette='sky'] {
     --accent: #a2cdf0;
     --accent-strong: #c2def5;
   }
-  :root:not([data-theme='light'])[data-palette='black'] {
+  :root[data-palette='black'] {
     --accent: #cfcfd6;
     --accent-strong: #e6e6ec;
   }
-  :root:not([data-theme='light'])[data-palette='gray'] {
+  :root[data-palette='gray'] {
     --accent: #aebbc5;
     --accent-strong: #ccd6dd;
   }
-}
-
-:root[data-theme='dark'] {
-    --bg: #171219;
-    --bg-raised: #211a24;
-    --text: #ece4ea;
-    --text-muted: #b3a4ad;
-    --text-faint: #8d7e87;
-    --glass-bg: hsl(300 20% 10% / 0.5);
-    --glass-bg-strong: hsl(300 20% 12% / 0.78);
-    --glass-border: hsl(320 40% 85% / 0.12);
-    --glass-shadow: 0 8px 32px hsl(300 40% 3% / 0.5);
-    --card-shadow: 0 4px 18px hsl(300 40% 3% / 0.35);
-    --aurora-opacity: 0.26;
-    --on-gradient: #241722;
-    --error: #f79cae;
-    color-scheme: dark;
-}
-:root[data-theme='dark'],
-:root[data-theme='dark'],
-  :root[data-theme='dark'][data-palette='rose'] {
-    --accent: #f0a8c5;
-    --accent-strong: #f7c6da;
-  }
-  :root[data-theme='dark'][data-palette='lavender'] {
-    --accent: #c6b1f0;
-    --accent-strong: #dbccf7;
-  }
-  :root[data-theme='dark'][data-palette='mint'] {
-    --accent: #9adcc0;
-    --accent-strong: #bdeada;
-  }
-  :root[data-theme='dark'][data-palette='peach'] {
-    --accent: #f5bd8e;
-    --accent-strong: #f9d4b2;
-  }
-  :root[data-theme='dark'][data-palette='sky'] {
-    --accent: #a2cdf0;
-    --accent-strong: #c2def5;
-  }
-  :root[data-theme='dark'][data-palette='black'] {
-    --accent: #cfcfd6;
-    --accent-strong: #e6e6ec;
-  }
-  :root[data-theme='dark'][data-palette='gray'] {
-    --accent: #aebbc5;
-    --accent-strong: #ccd6dd;
-  }
-
-:root[data-theme='light'] {
-  color-scheme: light;
 }
 
 /* --------------------------------------------------------------------------
@@ -1084,34 +1029,6 @@ footer.site-footer {
   animation: success-pop 0.45s var(--ease-soft) both;
 }
 
-/* Theme toggle (sun/moon) in the top bar */
-.topbar-actions {
-  display: inline-flex;
-  align-items: center;
-  gap: var(--space-2);
-}
-
-.theme-toggle {
-  inline-size: 2.25rem;
-  block-size: 2.25rem;
-  border-radius: 50%;
-  display: grid;
-  place-items: center;
-  font-size: 1.1rem;
-  line-height: 1;
-  border: 1px solid var(--glass-border);
-  background: var(--glass-bg);
-  transition: transform var(--dur-fast) var(--ease-soft), border-color var(--dur-fast) var(--ease-soft);
-}
-
-.theme-toggle:hover {
-  transform: rotate(18deg) scale(1.06);
-  border-color: var(--accent);
-}
-
-.theme-toggle:active {
-  transform: rotate(40deg) scale(0.94);
-}
 
 /* GitHub contribute line, bottom of every page */
 .gh-footer {

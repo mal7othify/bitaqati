@@ -167,8 +167,6 @@ export const STRINGS = {
     en: "Contribute to this project on GitHub",
   },
 
-  /* Theme toggle (sun/moon) */
-  themeToggle: { ar: "تبديل الوضع الليلي", en: "Toggle dark mode" },
 
   /* Not-found page */
   nfTitle: { ar: "ما في بطاقة هنا", en: "No card here" },

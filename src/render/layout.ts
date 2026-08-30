@@ -43,7 +43,6 @@ ${opts.description ? html`<meta name="description" content="${opts.description}"
 <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400..700&family=Inter:wght@400..800&family=IBM+Plex+Sans+Arabic:wght@400;500;600;700&display=swap" rel="stylesheet" />
 <link rel="stylesheet" href="${versioned('/styles.css')}" />
 <link rel="icon" href="${raw(FAVICON)}" />
-<script src="${versioned('/js/theme.js')}"></script>
 ${opts.head ?? ''}
 ${opts.umami ? html`<script defer src="${opts.umami.src}" data-website-id="${opts.umami.websiteId}"></script>` : ''}
 ${CF_BEACON_TOKEN ? html`<script defer src="https://static.cloudflareinsights.com/beacon.min.js" data-cf-beacon="${JSON.stringify({ token: CF_BEACON_TOKEN })}"></script>` : ''}
@@ -63,14 +62,10 @@ ${opts.body}
 
 export function topbar(lang: Lang, right?: Raw): Raw {
   const brand = STRINGS.brand[lang];
-  const toggleLabel = STRINGS.themeToggle[lang];
   return html`<header class="topbar container">
   <div class="topbar-inner glass">
     <a class="brand" href="/"><span class="brand-mark" aria-hidden="true">ب</span><span id="brand-name">${brand}</span></a>
-    <div class="topbar-actions">
-      ${right ?? ''}
-      <button type="button" class="theme-toggle" id="theme-toggle" aria-label="${toggleLabel}" title="${toggleLabel}">🌙</button>
-    </div>
+    ${right ?? ''}
   </div>
 </header>`;
 }
