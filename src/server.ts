@@ -25,11 +25,12 @@ const UMAMI: UmamiConfig =
 mkdirSync(dirname(DB_PATH), { recursive: true });
 export const store = openStore(DB_PATH);
 
-/* Rate limits */
-const createLimit = new RateLimiter(3, 60 * 60 * 1000); // 3 creations / hour / IP
-const editLimit = new RateLimiter(30, 60 * 60 * 1000);
-const reportLimit = new RateLimiter(5, 60 * 60 * 1000);
-const assetLimit = new RateLimiter(120, 60 * 1000); // vcf+qr: 120 / minute / IP
+/* Rate limits, per IP. Kept loose enough for shared networks (conference
+   venues, offices, carrier-grade NAT) where many visitors share one IP. */
+const createLimit = new RateLimiter(10, 60 * 60 * 1000); // creations / hour
+const editLimit = new RateLimiter(100, 60 * 60 * 1000); // edits / hour
+const reportLimit = new RateLimiter(5, 60 * 60 * 1000); // reports / hour
+const assetLimit = new RateLimiter(300, 60 * 1000); // vcf+qr / minute
 setInterval(() => [createLimit, editLimit, reportLimit, assetLimit].forEach((l) => l.sweep()), 10 * 60 * 1000).unref();
 
 const app = new Hono();

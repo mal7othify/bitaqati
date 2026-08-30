@@ -124,13 +124,13 @@ test('report + admin unpublish flow', async () => {
   assert.equal(page.status, 404);
 });
 
-test('rate limit: 4th creation from one IP is rejected', async () => {
+test('rate limit: 11th creation from one IP is rejected', async () => {
   const ip = '10.9.9.9';
-  for (let i = 0; i < 3; i++) {
+  for (let i = 0; i < 10; i++) {
     const res = await jsonReq('POST', '/api/cards', { nameEn: `Person ${i}` }, ip);
     assert.equal(res.status, 201, `creation ${i + 1} allowed`);
   }
-  const blocked = await jsonReq('POST', '/api/cards', { nameEn: 'Person 4' }, ip);
+  const blocked = await jsonReq('POST', '/api/cards', { nameEn: 'Person 11' }, ip);
   assert.equal(blocked.status, 429);
 });
 

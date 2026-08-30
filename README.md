@@ -43,7 +43,7 @@ Caddy terminates TLS with automatic certificates for `DOMAIN`. Monitor
 | Route                                 | What                                                  |
 | ------------------------------------- | ----------------------------------------------------- |
 | `GET /`                               | landing: create form + live preview (AR/EN UI toggle) |
-| `POST /api/cards`                     | create → `{id, url, editUrl, editToken}` (3/hour/IP)  |
+| `POST /api/cards`                     | create → `{id, url, editUrl, editToken}` (10/hour/IP) |
 | `GET /:id`                            | card page (SSR, RTL/LTR, OG meta, cacheable)          |
 | `GET /:id?lang=en`                    | orders that language's card first                     |
 | `GET /:id/vcard?lang=`                | vCard 3.0 UTF-8 download, per language, no TEL        |
