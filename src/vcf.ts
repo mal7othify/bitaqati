@@ -38,8 +38,7 @@ export function buildVcf(card: Card, lang: Lang, cardUrl: string): { body: strin
   lines.push(`URL:${vEscape(cardUrl)}`);
 
   const notes: string[] = [];
-  // the label is in the *other* language: the Arabic .vcf labels the English name
-  if (otherName) notes.push(`${STRINGS.vcfNameNote[lang === 'ar' ? 'en' : 'ar']}: ${otherName}`);
+  if (otherName) notes.push(`${STRINGS.vcfNameNote[lang]}: ${otherName}`);
   if (bio) notes.push(bio);
   if (notes.length) lines.push(`NOTE;CHARSET=UTF-8:${vEscape(notes.join('\n'))}`);
 

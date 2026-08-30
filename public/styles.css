@@ -17,6 +17,7 @@
   --glass-border: hsl(330 25% 30% / 0.13);
   --glass-blur: 16px;
   --glass-shadow: 0 8px 32px hsl(330 30% 40% / 0.12);
+  --card-shadow: 0 4px 16px hsl(330 30% 40% / 0.07);
 
   --aurora-opacity: 0.55;
   --on-gradient: #ffffff;
@@ -97,8 +98,10 @@
   --accent-strong: #39434d;
 }
 
+/* Dark tokens. The theme toggle sets data-theme on <html>; without it the
+   system preference decides. An explicit data-theme always wins. */
 @media (prefers-color-scheme: dark) {
-  :root {
+  :root:not([data-theme='light']) {
     --bg: #171219;
     --bg-raised: #211a24;
     --text: #ece4ea;
@@ -108,39 +111,93 @@
     --glass-bg-strong: hsl(300 20% 12% / 0.78);
     --glass-border: hsl(320 40% 85% / 0.12);
     --glass-shadow: 0 8px 32px hsl(300 40% 3% / 0.5);
+    --card-shadow: 0 4px 18px hsl(300 40% 3% / 0.35);
     --aurora-opacity: 0.26;
     --on-gradient: #241722;
     --error: #f79cae;
+    color-scheme: dark;
   }
-  :root,
-  :root[data-palette='rose'] {
+  :root:not([data-theme='light']),
+  :root:not([data-theme='light']),
+  :root:not([data-theme='light'])[data-palette='rose'] {
     --accent: #f0a8c5;
     --accent-strong: #f7c6da;
   }
-  :root[data-palette='lavender'] {
+  :root:not([data-theme='light'])[data-palette='lavender'] {
     --accent: #c6b1f0;
     --accent-strong: #dbccf7;
   }
-  :root[data-palette='mint'] {
+  :root:not([data-theme='light'])[data-palette='mint'] {
     --accent: #9adcc0;
     --accent-strong: #bdeada;
   }
-  :root[data-palette='peach'] {
+  :root:not([data-theme='light'])[data-palette='peach'] {
     --accent: #f5bd8e;
     --accent-strong: #f9d4b2;
   }
-  :root[data-palette='sky'] {
+  :root:not([data-theme='light'])[data-palette='sky'] {
     --accent: #a2cdf0;
     --accent-strong: #c2def5;
   }
-  :root[data-palette='black'] {
+  :root:not([data-theme='light'])[data-palette='black'] {
     --accent: #cfcfd6;
     --accent-strong: #e6e6ec;
   }
-  :root[data-palette='gray'] {
+  :root:not([data-theme='light'])[data-palette='gray'] {
     --accent: #aebbc5;
     --accent-strong: #ccd6dd;
   }
+}
+
+:root[data-theme='dark'] {
+    --bg: #171219;
+    --bg-raised: #211a24;
+    --text: #ece4ea;
+    --text-muted: #b3a4ad;
+    --text-faint: #8d7e87;
+    --glass-bg: hsl(300 20% 10% / 0.5);
+    --glass-bg-strong: hsl(300 20% 12% / 0.78);
+    --glass-border: hsl(320 40% 85% / 0.12);
+    --glass-shadow: 0 8px 32px hsl(300 40% 3% / 0.5);
+    --card-shadow: 0 4px 18px hsl(300 40% 3% / 0.35);
+    --aurora-opacity: 0.26;
+    --on-gradient: #241722;
+    --error: #f79cae;
+    color-scheme: dark;
+}
+:root[data-theme='dark'],
+:root[data-theme='dark'],
+  :root[data-theme='dark'][data-palette='rose'] {
+    --accent: #f0a8c5;
+    --accent-strong: #f7c6da;
+  }
+  :root[data-theme='dark'][data-palette='lavender'] {
+    --accent: #c6b1f0;
+    --accent-strong: #dbccf7;
+  }
+  :root[data-theme='dark'][data-palette='mint'] {
+    --accent: #9adcc0;
+    --accent-strong: #bdeada;
+  }
+  :root[data-theme='dark'][data-palette='peach'] {
+    --accent: #f5bd8e;
+    --accent-strong: #f9d4b2;
+  }
+  :root[data-theme='dark'][data-palette='sky'] {
+    --accent: #a2cdf0;
+    --accent-strong: #c2def5;
+  }
+  :root[data-theme='dark'][data-palette='black'] {
+    --accent: #cfcfd6;
+    --accent-strong: #e6e6ec;
+  }
+  :root[data-theme='dark'][data-palette='gray'] {
+    --accent: #aebbc5;
+    --accent-strong: #ccd6dd;
+  }
+
+:root[data-theme='light'] {
+  color-scheme: light;
 }
 
 /* --------------------------------------------------------------------------
@@ -529,11 +586,33 @@ html[lang='ar'] legend {
   inline-size: 100%;
 }
 
+.field select {
+  appearance: none;
+  -webkit-appearance: none;
+  padding-inline-end: 2.5rem;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath d='M1 1.5 6 6.5 11 1.5' fill='none' stroke='%23837880' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: right 0.9rem center;
+  background-size: 12px 8px;
+  cursor: pointer;
+}
+
+[dir='rtl'] .field select {
+  background-position: left 0.9rem center;
+}
+
 .field input:focus,
 .field select:focus,
 .field textarea:focus {
   outline: none;
   border-color: var(--accent);
+  box-shadow: 0 0 0 3px color-mix(in oklab, var(--accent) 16%, transparent);
+}
+
+.field input,
+.field select,
+.field textarea {
+  transition: border-color var(--dur-fast) var(--ease-soft), box-shadow var(--dur-fast) var(--ease-soft);
 }
 
 .field .hint {
@@ -718,6 +797,7 @@ html[lang='ar'] legend {
 }
 
 .vcard {
+  box-shadow: var(--card-shadow);
   padding: var(--space-5) var(--space-4) var(--space-4);
   text-align: center;
   display: grid;
@@ -739,7 +819,7 @@ html[lang='ar'] legend {
   font-size: 2rem;
   line-height: 1;
   user-select: none;
-  box-shadow: 0 10px 30px color-mix(in oklab, var(--accent) 35%, transparent);
+  box-shadow: 0 6px 18px color-mix(in oklab, var(--accent) 22%, transparent);
   margin-block-end: var(--space-2);
 }
 
@@ -866,4 +946,165 @@ footer.site-footer {
   html {
     scroll-behavior: auto;
   }
+}
+
+/* --------------------------------------------------------------------------
+   Motion & interactivity
+-------------------------------------------------------------------------- */
+
+@keyframes aurora-drift {
+  0%, 100% { transform: translate(0, 0) scale(1); }
+  50% { transform: translate(4vmax, -3vmax) scale(1.08); }
+}
+
+.aurora span {
+  animation: aurora-drift 26s var(--ease-soft) infinite;
+}
+
+.aurora span:nth-child(2) {
+  animation-duration: 34s;
+  animation-delay: -9s;
+}
+
+.aurora span:nth-child(3) {
+  animation-duration: 40s;
+  animation-delay: -18s;
+}
+
+@keyframes fade-up {
+  from {
+    opacity: 0;
+    transform: translateY(14px);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+.hero {
+  animation: fade-up var(--dur-slow) var(--ease-soft) both;
+}
+
+.panel {
+  animation: fade-up var(--dur-slow) var(--ease-soft) 80ms both;
+}
+
+/* Re-runs whenever a preview card or language section is toggled back on */
+.preview-block:not([hidden]),
+.fieldset-body:not([hidden]) {
+  animation: fade-up 0.35s var(--ease-soft) both;
+}
+
+.vcard {
+  animation: fade-up var(--dur-slow) var(--ease-soft) both;
+  transition: box-shadow var(--dur-fast) var(--ease-soft), transform var(--dur-fast) var(--ease-soft);
+}
+
+.card-wrap .vcard:nth-child(2) {
+  animation-delay: 120ms;
+}
+
+.card-wrap .vcard:hover {
+  box-shadow: var(--glass-shadow);
+  transform: translateY(-3px);
+}
+
+@keyframes avatar-pop {
+  0% { transform: scale(1); }
+  40% { transform: scale(1.12) rotate(-4deg); }
+  100% { transform: scale(1); }
+}
+
+.avatar {
+  transition: box-shadow var(--dur-fast) var(--ease-soft);
+}
+
+.avatar:hover {
+  animation: avatar-pop 0.5s var(--ease-soft);
+  box-shadow: 0 8px 24px color-mix(in oklab, var(--accent) 35%, transparent);
+}
+
+.btn:active {
+  transform: translateY(0) scale(0.97);
+}
+
+.palette-chip:active {
+  transform: scale(0.9);
+}
+
+@keyframes chip-select {
+  0% { transform: scale(1); }
+  50% { transform: scale(1.14); }
+  100% { transform: scale(1); }
+}
+
+.palette-chip[aria-pressed='true'] {
+  animation: chip-select 0.35s var(--ease-soft);
+}
+
+.links .arrow {
+  transition: transform var(--dur-fast) var(--ease-soft);
+}
+
+.links a:hover .arrow {
+  transform: translateX(4px);
+}
+
+[dir='rtl'] .links a:hover .arrow {
+  transform: scaleX(-1) translateX(4px);
+}
+
+.toggle-group button,
+.toggle-group a {
+  transition: background var(--dur-fast) var(--ease-soft), color var(--dur-fast) var(--ease-soft);
+}
+
+.legend-toggle input,
+.legend-toggle span {
+  transition: opacity var(--dur-fast) var(--ease-soft);
+}
+
+@keyframes success-pop {
+  0% {
+    opacity: 0;
+    transform: scale(0.96) translateY(10px);
+  }
+  100% {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+.success-panel:not([hidden]) {
+  animation: success-pop 0.45s var(--ease-soft) both;
+}
+
+/* Theme toggle (sun/moon) in the top bar */
+.topbar-actions {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-2);
+}
+
+.theme-toggle {
+  inline-size: 2.25rem;
+  block-size: 2.25rem;
+  border-radius: 50%;
+  display: grid;
+  place-items: center;
+  font-size: 1.1rem;
+  line-height: 1;
+  border: 1px solid var(--glass-border);
+  background: var(--glass-bg);
+  transition: transform var(--dur-fast) var(--ease-soft), border-color var(--dur-fast) var(--ease-soft);
+}
+
+.theme-toggle:hover {
+  transform: rotate(18deg) scale(1.06);
+  border-color: var(--accent);
+}
+
+.theme-toggle:active {
+  transform: rotate(40deg) scale(0.94);
 }

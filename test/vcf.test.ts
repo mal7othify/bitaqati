@@ -24,7 +24,7 @@ test('vCard 3.0 shape: CRLF lines, UTF-8 Arabic FN, no TEL', () => {
   assert.ok(body.startsWith('BEGIN:VCARD\r\nVERSION:3.0\r\n'));
   assert.match(body, /FN;CHARSET=UTF-8:سارة\\, العتيبي/);
   assert.ok(!/^TEL/m.test(body), 'no TEL field');
-  assert.match(body, /NOTE;CHARSET=UTF-8:Name in English: Sara Alotaibi/);
+  assert.match(body, /NOTE;CHARSET=UTF-8:الاسم بالإنجليزي: Sara Alotaibi/);
   assert.match(body, /URL:https:\/\/github.com\/sara/);
   assert.ok(body.endsWith('END:VCARD\r\n'));
   assert.equal(filename, 'سارة, العتيبي.vcf');
@@ -34,7 +34,7 @@ test('one vcf per language: EN download carries Arabic name in NOTE', () => {
   const { body } = buildVcf(card, 'en', 'https://x.test/abc123xyz');
   assert.match(body, /FN;CHARSET=UTF-8:Sara Alotaibi/);
   assert.match(body, /TITLE;CHARSET=UTF-8:Engineer\\; Lead/);
-  assert.match(body, /NOTE;CHARSET=UTF-8:الاسم بالعربي: سارة\\, العتيبي/);
+  assert.match(body, /NOTE;CHARSET=UTF-8:Name in Arabic: سارة\\, العتيبي/);
 });
 
 test('vEscape covers backslash, comma, semicolon, newline', () => {
