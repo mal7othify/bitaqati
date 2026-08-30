@@ -5,3 +5,4 @@ data/
 .env
 technical-specs.md
 .DS_Store
+legacy-netlify/
