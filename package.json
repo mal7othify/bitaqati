@@ -1,0 +1,27 @@
+{
+  "name": "bitaqati",
+  "version": "2.0.0",
+  "private": true,
+  "description": "\u0628\u0637\u0627\u0642\u062a\u064a \u2014 bilingual (AR/EN) digital business cards. Self-hosted: Hono + SQLite + Caddy.",
+  "type": "module",
+  "engines": {
+    "node": ">=24"
+  },
+  "scripts": {
+    "build": "tsc -p tsconfig.json && tsc -p tsconfig.client.json",
+    "start": "node dist/src/server.js",
+    "dev": "npm run build && node dist/src/server.js",
+    "test": "npm run build && node --test \"dist/test/*.test.js\""
+  },
+  "dependencies": {
+    "@hono/node-server": "^1.13.7",
+    "hono": "^4.6.16",
+    "nanoid": "^5.0.9",
+    "qrcode": "^1.5.4"
+  },
+  "devDependencies": {
+    "@types/node": "^24.0.0",
+    "@types/qrcode": "^1.5.5",
+    "typescript": "^5.7.3"
+  }
+}
