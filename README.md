@@ -47,7 +47,7 @@ Caddy terminates TLS with automatic certificates for `DOMAIN`. Monitor
 | `GET /:id`                            | card page (SSR, RTL/LTR, OG meta, cacheable)          |
 | `GET /:id?lang=en`                    | orders that language's card first                     |
 | `GET /:id/vcard?lang=`                | vCard 3.0 UTF-8 download, per language, no TEL        |
-| `GET /:id/qr.svg` · `/:id/qr.png`     | QR (EC level M, encodes `?src=qr`)                    |
+| `GET /:id/qr.png` · `/:id/qr.svg`     | QR (EC M, 4-module quiet zone, encodes `?src=qr`); `?download=1` → attachment |
 | `GET /:id/edit?token=`                | edit form (secret edit link)                          |
 | `PUT /api/cards/:id`                  | update (requires `editToken`)                         |
 | `POST /api/cards/:id/report`          | abuse report                                          |

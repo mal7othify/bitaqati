@@ -184,8 +184,8 @@ export function homePage(opts: HomePageOptions = {}): string {
     <div class="qr-downloads">
       <img id="success-qr" alt="QR code" src="data:," />
       <div class="qr-links">
+        <a class="btn btn-gradient" id="qr-png" href="/" download data-i18n="btnQrPng">${t('btnQrPng')}</a>
         <a class="btn btn-ghost" id="qr-svg" href="/" download data-i18n="btnQrSvg">${t('btnQrSvg')}</a>
-        <a class="btn btn-ghost" id="qr-png" href="/" download data-i18n="btnQrPng">${t('btnQrPng')}</a>
       </div>
     </div>
     <p data-i18n="successEditNote">${t('successEditNote')}</p>

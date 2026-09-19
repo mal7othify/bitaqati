@@ -93,6 +93,28 @@ test('QR endpoints serve SVG and PNG encoding ?src=qr', async () => {
   assert.equal(pngRes.headers.get('content-type'), 'image/png');
   const bytes = new Uint8Array(await pngRes.arrayBuffer());
   assert.equal(bytes[0], 0x89, 'PNG magic byte');
+  assert.equal(bytes[1], 0x50); // 'P'
+  assert.equal(bytes[2], 0x4e); // 'N'
+  assert.equal(bytes[3], 0x47); // 'G'
+  // IHDR width/height (big-endian at bytes 16..23): 1024x1024
+  const view = new DataView(bytes.buffer);
+  assert.equal(view.getUint32(16), 1024);
+  assert.equal(view.getUint32(20), 1024);
+});
+
+test('QR PNG is inline by default and an attachment with ?download=1', async () => {
+  const inline = await app.request(`/${cardId}/qr.png`, { headers: { 'x-forwarded-for': '10.0.0.5' } });
+  assert.equal(inline.status, 200);
+  assert.equal(inline.headers.get('content-disposition'), `inline; filename="bitaqati-${cardId}-qr.png"; filename*=UTF-8''bitaqati-${cardId}-qr.png`);
+
+  const download = await app.request(`/${cardId}/qr.png?download=1`, { headers: { 'x-forwarded-for': '10.0.0.5' } });
+  assert.equal(download.status, 200);
+  assert.equal(download.headers.get('content-type'), 'image/png');
+  assert.equal(download.headers.get('x-content-type-options'), 'nosniff');
+  assert.match(download.headers.get('content-disposition') ?? '', new RegExp(`^attachment; filename="bitaqati-${cardId}-qr\\.png"`));
+
+  const svg = await app.request(`/${cardId}/qr.svg?download=1`, { headers: { 'x-forwarded-for': '10.0.0.5' } });
+  assert.match(svg.headers.get('content-disposition') ?? '', new RegExp(`^attachment; filename="bitaqati-${cardId}-qr\\.svg"`));
 });
 
 test('editing requires the token', async () => {

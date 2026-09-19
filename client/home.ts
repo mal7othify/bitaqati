@@ -450,9 +450,17 @@ function showSuccess(id: string, url: string, editUrl?: string): void {
   (document.getElementById('success-link') as HTMLAnchorElement).textContent = url.replace(/^https?:\/\//, '');
   (document.getElementById('success-link') as HTMLAnchorElement).href = url;
   (document.getElementById('success-open') as HTMLAnchorElement).href = url;
-  (document.getElementById('success-qr') as HTMLImageElement).src = `/${id}/qr.svg`;
-  (document.getElementById('qr-svg') as HTMLAnchorElement).href = `/${id}/qr.svg`;
-  (document.getElementById('qr-png') as HTMLAnchorElement).href = `/${id}/qr.png`;
+  /* PNG everywhere a phone touches it: the preview can be long-pressed and
+     saved to Photos (an SVG cannot), and the primary download is PNG - SVG
+     files are not viewable in mobile galleries. `?download=1` makes the
+     server send an attachment with the same filename as the `download`
+     attribute, for in-app browsers that ignore the attribute. */
+  (document.getElementById('success-qr') as HTMLImageElement).src = `/${id}/qr.png`;
+  for (const format of ['png', 'svg'] as const) {
+    const link = document.getElementById(`qr-${format}`) as HTMLAnchorElement;
+    link.href = `/${id}/qr.${format}?download=1`;
+    link.download = `bitaqati-${id}-qr.${format}`;
+  }
   const editBox = document.getElementById('edit-url')!;
   const note = document.querySelector<HTMLElement>('[data-i18n="successEditNote"]');
   if (editUrl) {

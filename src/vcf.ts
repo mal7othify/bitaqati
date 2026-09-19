@@ -49,8 +49,8 @@ export function buildVcf(card: Card, lang: Lang, cardUrl: string): { body: strin
 
 /** Content-Disposition with a safe ASCII fallback and RFC 5987 UTF-8 name
     (Arabic filenames survive on modern browsers, ASCII everywhere else). */
-export function contentDisposition(filename: string): string {
+export function contentDisposition(filename: string, type: 'attachment' | 'inline' = 'attachment'): string {
   const ascii = filename.replace(/[^\x20-\x7e]/g, '_').replace(/["\\]/g, '_');
   const encoded = encodeURIComponent(filename).replace(/['()*]/g, (c) => '%' + c.charCodeAt(0).toString(16));
-  return `attachment; filename="${ascii}"; filename*=UTF-8''${encoded}`;
+  return `${type}; filename="${ascii}"; filename*=UTF-8''${encoded}`;
 }

@@ -8,7 +8,7 @@ import { dirname } from 'node:path';
 import { openStore } from './db.js';
 import { validateCardInput } from './validation.js';
 import { buildVcf, contentDisposition } from './vcf.js';
-import { qrPng, qrSvg, qrTargetUrl } from './qr.js';
+import { qrFilename, qrPng, qrSvg, qrTargetUrl } from './qr.js';
 import { RateLimiter } from './ratelimit.js';
 import { cardPage, notFoundPage, UmamiConfig } from './render/cardPage.js';
 import { homePage } from './render/homePage.js';
@@ -205,13 +205,26 @@ app.get('/:id/vcard', (c) => {
   return c.body(body);
 });
 
+/* QR: same bytes whether previewed or downloaded. `?download=1` turns the
+   response into an attachment with a stable filename - the HTML `download`
+   attribute alone is ignored by many in-app browsers (Instagram, X, some
+   Android WebViews), which would open the image instead of saving it.
+   Without the flag the image renders inline (the success-panel preview)
+   but still carries the filename for "Save image as". */
+function qrHeaders(c: Context, id: string, format: 'png' | 'svg'): void {
+  const download = c.req.query('download') !== undefined;
+  c.header('Content-Type', format === 'png' ? 'image/png' : 'image/svg+xml');
+  c.header('Content-Disposition', contentDisposition(qrFilename(id, format), download ? 'attachment' : 'inline'));
+  c.header('X-Content-Type-Options', 'nosniff');
+  c.header('Cache-Control', 'public, max-age=86400');
+}
+
 app.get('/:id/qr.svg', async (c) => {
   if (!assetLimit.hit(clientIp(c))) return c.text('rate limit', 429);
   const card = getPublished(c);
   if (!card) return c.text('not found', 404);
   const svg = await qrSvg(qrTargetUrl(baseUrl(c), card.id));
-  c.header('Content-Type', 'image/svg+xml');
-  c.header('Cache-Control', 'public, max-age=86400');
+  qrHeaders(c, card.id, 'svg');
   return c.body(svg);
 });
 
@@ -220,8 +233,7 @@ app.get('/:id/qr.png', async (c) => {
   const card = getPublished(c);
   if (!card) return c.text('not found', 404);
   const png = await qrPng(qrTargetUrl(baseUrl(c), card.id));
-  c.header('Content-Type', 'image/png');
-  c.header('Cache-Control', 'public, max-age=86400');
+  qrHeaders(c, card.id, 'png');
   return c.body(new Uint8Array(png));
 });
 
