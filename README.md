@@ -37,6 +37,7 @@ docker compose up -d --build
 
 Caddy terminates TLS with automatic certificates for `DOMAIN`. Monitor
 `GET /healthz`; back up the SQLite database with `scripts/backup.sh`.
+Versioning, tagging and what to restart per change: see [RELEASING.md](RELEASING.md).
 
 ## API surface
 
